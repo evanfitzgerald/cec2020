@@ -36,3 +36,6 @@ class Cube:
         if tup == None:
             return None
         return '#%02x%02x%02x' % tup.colour
+
+    def isDone(self):
+        return self.scrambled == self.solved
