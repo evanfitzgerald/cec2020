@@ -8,12 +8,13 @@
       <input type="checkbox" id="vertical" v-model="vertical">
       <label for="vertical">Vertical</label>
     </span>
-    <Three :vertical="vertical" :horizontal="horizontal"/>
+    <Three ref="threecomponent" :size="size" :inputGrid="inputGrid" :vertical="vertical" :horizontal="horizontal"></Three>
   </div>
 </template>
 
 <script>
 import Three from './components/Three.vue'
+import axios from "axios";
 
 export default {
   name: 'App',
@@ -23,9 +24,23 @@ export default {
   data() {
     return {
       horizontal: false,
-      vertical: false
+      vertical: false,
+      size: null,
+      inputGrid: null,
     }
-  }
+  },
+  mounted() {
+    axios
+      .get("http://localhost:5000/getgrid/easy.txt")
+      .then(response => (this.handleResponse(response)));
+  },
+  methods: {
+    handleResponse(response) {
+      this.size = response.data.size;
+      this.inputGrid = response.data.grid;
+      this.$refs.threecomponent.updateGrid(this.size, this.inputGrid);
+    }
+  },
 }
 </script>
 
