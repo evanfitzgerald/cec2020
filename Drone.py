@@ -20,21 +20,21 @@ class Drone:
         if(self.y == 0):
             print("At top!")
             return
-        self.timeComp++;
+        self.timeComp += 1
         self.y -= 1
 
     def MoveDown(self):
         if(self.y == len(self.cube.scrambled)-1):
             print("At Bottom!")
             return
-        self.timeComp++;
+        self.timeComp += 1
         self.y += 1
 
     def MoveLeft(self):
         if(self.x == 0):
             print("At Left!")
             return
-        self.timeComp++;
+        self.timeComp += 1
         self.x -= 1
 
     def MoveTo(self, x, y):
@@ -50,7 +50,7 @@ class Drone:
         if(self.x == len(self.cube.scrambled)-1):
             print("At Right!")
             return
-        self.timeComp++;
+        self.timeComp += 1
         self.x += 1
 
     def hop(self):
@@ -63,9 +63,9 @@ class Drone:
             z-=1
         if(len(self.hopper) >= self.hopperSize):
             raise IndexError("Hopper is full!")
-        if(self.lastTouch == block.colour)
+        if(self.lastTouch == block.colour):
             self.timeComp += 2
-        else
+        else:
             self.timeComp += 3
         self.cube.scrambled[self.x][self.y][z+1] = None
         self.hopper.append(block)
@@ -84,9 +84,9 @@ class Drone:
             self.hopper.append(Block(colour))
             return
         #print(self.x, self.y,z)
-        if(self.lastTouch == block.colour)
+        if(self.lastTouch == block.colour):
             self.timeComp += 2
-        else
+        else:
             self.timeComp += 3
         self.lastTouch = block.colour
         self.cube.scrambled[self.x][self.y][z+2] = Block(colour)
