@@ -4,6 +4,10 @@
       <p>
         <label for="filename">File Name: </label>
         <input id="filename" v-model="filename" :placeholder="filename">
+        &nbsp;
+        <input type="checkbox" id="solved" v-model="solved">
+        <label for="solved">Solved Grid?</label>
+        &nbsp;
         <button @click="getData">Load data</button>
       </p>
       <p>Rotate model: 
@@ -35,7 +39,8 @@ export default {
       invert: false,
       size: null,
       inputGrid: null,
-      filename: 'easy.txt'
+      filename: 'easy.txt',
+      solved: true
     }
   },
   mounted() {
@@ -55,9 +60,11 @@ export default {
       }
     },
     getData() {
+      var baseUrl = "http://localhost:5000";
+      var modifier = this. solved ? "/getsolvedgrid/" : "/getscrambledgrid/";
       this.vertical = this.horizontal = this.invert = false;
       axios
-        .get("http://localhost:5000/getgrid/" + this.filename)
+        .get(baseUrl + modifier + this.filename)
         .then(response => (this.handleResponse(response)))
         .catch(error => (this.handleError(error)));
     }

@@ -13,12 +13,21 @@ app.config.from_object(__name__)
 # enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
 
-@app.route('/getgrid/<file_name>')
-def fetch_grid(file_name):
+@app.route('/getsolvedgrid/<file_name>')
+def fetch_solved_grid(file_name):
     c = readfile(file_name)
     data = json.dumps({
         'size': c.size,
-        'grid': c.GetHex()
+        'grid': c.GetHex(True)
+    })
+    return data
+
+@app.route('/getscrambledgrid/<file_name>')
+def fetch_scrambled_grid(file_name):
+    c = readfile(file_name)
+    data = json.dumps({
+        'size': c.size,
+        'grid': c.GetHex(False)
     })
     return data
 
