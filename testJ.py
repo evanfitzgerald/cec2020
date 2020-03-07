@@ -5,9 +5,10 @@ from readfile import readfile
 import math
 
 cube = readfile("easy.txt")
-sizec = 5**3
-size = 5
+size = cube.size
+sizec = size**3
 mode = 1
+stop = 0
 storHop = int(math.sqrt(sizec)/2)
 drone = Drone(storHop,cube,0,0,size)
 print(cube)
@@ -16,7 +17,7 @@ x_limit = size-1
 y_limit = size-1
 
 
-def mover(mode, x_limit, y_limit):
+def mover(mode, x_limit, y_limit, stop):
     if (mode == 1):
         drone.MoveRight()
         if (drone.x == x_limit):
@@ -35,14 +36,45 @@ def mover(mode, x_limit, y_limit):
             mode = 1
             y_limit = y_limit - 1
             x_limit = x_limit - 1
+            stop = 1
 
-    return mode, x_limit, y_limit
-
-
-for i in range(24):
+    return mode, x_limit, y_limit, stop
+'''
+print(drone.x)
+print(drone.y)
+print(cube.colEmpty(drone.x, drone.y, cube.size))
+mode, x_limit, y_limit = mover(mode, x_limit, y_limit)
+print(drone.x)
+print(drone.y)
+print(cube.colEmpty(drone.x, drone.y, cube.size))
+for i in range(15):
     mode, x_limit, y_limit = mover(mode, x_limit, y_limit)
-    print(drone.x,drone.y)
-drone.hop()
+print(drone.x)
+print(drone.y)
+print(cube.colEmpty(drone.x, drone.y, cube.size))
+'''
+# first part to sort each stack before we start moving
+count = 0
+while (stop == 0):
+    print(count)
+    drone.hop()
+    drone.hop()
+    drone.hop()
+    drone.hop()
+    drone.hop()
+    drone.unhopStack()
+    mode, x_limit, y_limit, stop = mover(mode, x_limit, y_limit, stop)
+stop = 1
 
-
+colour = "RED"
+drone.MoveTo(0,0)
+while True:
+    # if empty
+    if (cube.colEmpty(drone.x, drone.y, cube.size)):
+        #check hopper
+        # move
+        mode, x_limit, y_limit = mover(mode, x_limit, y_limit)
+    else:
+        drone.hop()
+    break
 print(cube)
