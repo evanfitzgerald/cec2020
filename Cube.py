@@ -7,8 +7,8 @@ class Cube:
 
     def ScanMap(self, x, y):
         for i in range(self.size):
-            if(self.scrambled[x][y][self.size - 1 - i] != None):
-                return (self.solved[x][y][self.size - 1 - i],self.solved[x][y][self.size - 1 - i])
+            if(scrambled[x][y][self.size - 1 - i] != None):
+                return (self.solved[x][y][size - 1 - i],self.solved[x][y][size - 1 - i])
 
         return (None, None)
 
@@ -30,17 +30,14 @@ class Cube:
         return stri
 
     def colEmpty(self, x, y, z):
-        flag = False
+        flag = True
         for i in range(z):
             if (self.scrambled[x][y][i] != None):
-                flag = True
+                flag = False
         return flag
 
-    def GetHex(self, solved):
-        if (solved):
-            return [[[self.convert(self.solved[i][j][k]) for i in range(self.size)] for j in range(self.size)] for k in range(self.size)]
-        else:
-            return [[[self.convert(self.scrambled[i][j][k]) for i in range(self.size)] for j in range(self.size)] for k in range(self.size)]
+    def GetHex(self):
+        return [[[self.convert(self.solved[i][j][k]) for i in range(self.size)] for j in range(self.size)] for k in range(self.size)]
 
     def convert(self, tup):
         if tup == None:

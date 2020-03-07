@@ -3,8 +3,10 @@ from Cube import Cube
 from Drone import Drone
 from readfile import readfile
 import math
+import sys
 
-cube = readfile("easy.txt")
+filename = sys.argv[1]
+cube = readfile(filename)
 size = cube.size
 sizec = size**3
 mode = 1
@@ -65,19 +67,65 @@ while (stop == 0):
     drone.unhopStack()
     mode, x_limit, y_limit, stop = mover(mode, x_limit, y_limit, stop)
 stop = 1
-
-colour = "RED"
+thislistred = []
 drone.MoveTo(0,0)
-while True:
+gogo = 0
+nota = 0
+superx = 0
+supery = 0
+for i in range(100):
     # if empty
-    print("->", cube.colEmpty(drone.x, drone.y, cube.size))
-    if (cube.colEmpty(drone.x, drone.y, cube.size)):
-        if(len(drone.hopper) < drone.hopperSize):
-            drone.HopStack((255,0,0))
+    print("------")
+
+    print(drone.x, drone.y)
+
+    if (cube.colEmpty(drone.x, drone.y, cube.size)): #and ((drone.x,drone.y) not in thislistred)):
+        # now we have reds
+        print(drone.x)
+        print(drone.y)
+        print("------")
+        print(len(drone.hopper))
+        if (len(drone.hopper) > 0):
+            drone.unhopStack()
+            thislistred.append((drone.x,drone.y))
+            superx = drone.x
+            supery = drone.y
+        mode, x_limit, y_limit, stop = mover(mode, x_limit, y_limit, stop)
+
+    else:
+        #not empty
+        print(1234)
+        if(len(drone.hopper) < drone.hopperSize and ((drone.x,drone.y) not in thislistred)):
+            print(2222)
+            colour = drone.HopStack()
+            print(colour)
+            drone.printHopper()
+
+        if(len(drone.hopper) == drone.hopperSize):
+            mode = 1
+            drone.MoveTo(superx,supery)
+            x_limit = size-1
+            y_limit = size-1
+
         #check hopper
         # move
         mode, x_limit, y_limit, stop = mover(mode, x_limit, y_limit, stop)
-    else:
-        drone.hop()
-    break
+        '''
+        print(drone.x)
+        print(drone.y)
+        print("------")
+        print(len(drone.hopper))
+        if (len(drone.hopper) > 0):
+            drone.unhopStack()
+            thislistred.append((drone.x,drone.y))
+        mode, x_limit, y_limit, stop = mover(mode, x_limit, y_limit, stop)
+        '''
+
+
+
 print(cube)
+drone.printHopper()
+print(drone.x)
+print(drone.y)
+print("------")
+print(len(drone.hopper))
