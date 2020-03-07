@@ -22,7 +22,7 @@ def readfile(filename):
             y = int(l_split[1])
             z = int(rest_split[0])
             if (rest_split[1][1] != "\""):
-                arr2[x][y][z] = Block(tuple(map(int, rest_split[1][1:-2].split("_"))))
+                arr[x][y][z] = Block(tuple(map(int, rest_split[1][1:-2].split("_"))))
         # unscrambled
         elif (count > 2 and count <= size*size*size+2):
             #print(line)
@@ -31,6 +31,8 @@ def readfile(filename):
             x = int(l_split[0])
             y = int(l_split[1])
             z = int(rest_split[0])
+            if (rest_split[1][1] != "\""):
+                arr2[x][y][z] = Block(tuple(map(int, rest_split[1][1:-2].split("_"))))
 
             
     #print(arr)
@@ -41,4 +43,4 @@ def readfile(filename):
 
 if __name__ == "__main__":
     c = readfile("easy.txt")
-    print(c)
+    print(c.solved)
