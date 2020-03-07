@@ -5,7 +5,11 @@
         <label for="filename">File Name: </label>
         <input id="filename" v-model="filename" :placeholder="filename">
         &nbsp;
-        <input type="checkbox" id="solved" v-model="solved">
+        <input type="radio" id="drone" value="drone" v-model="solved">
+        <label for="drone">Drone? </label>
+        <input type="radio" id="original" value="original" v-model="solved">
+        <label for="original">Original? </label>
+        <input type="radio" id="solved" value="solved" v-model="solved">
         <label for="solved">Solved Grid?</label>
         &nbsp;
         <button @click="getData">Load data</button>
@@ -40,7 +44,7 @@ export default {
       size: null,
       inputGrid: null,
       filename: 'easy.txt',
-      solved: true
+      solved: 'solved'
     }
   },
   mounted() {
@@ -61,7 +65,15 @@ export default {
     },
     getData() {
       var baseUrl = "http://localhost:5000";
-      var modifier = this. solved ? "/getsolvedgrid/" : "/getscrambledgrid/";
+      var modifier = '';
+      if (this.solved == 'solved') {
+        modifier = '/getsolvedgrid/';
+      } else if (this.solved === 'drone') {
+        modifier = '/getdronegrid/';
+      } else {
+        modifier = '/getscrambledgrid/';
+      }
+      console.log(modifier);
       this.vertical = this.horizontal = this.invert = false;
       axios
         .get(baseUrl + modifier + this.filename)

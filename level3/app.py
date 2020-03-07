@@ -4,6 +4,7 @@ import json
 
 from Cube import Cube
 from readfile import readfile
+from testJ import testJ
 
 DEBUG = True
 
@@ -25,6 +26,15 @@ def fetch_solved_grid(file_name):
 @app.route('/getscrambledgrid/<file_name>')
 def fetch_scrambled_grid(file_name):
     c = readfile(file_name)
+    data = json.dumps({
+        'size': c.size,
+        'grid': c.GetHex(False)
+    })
+    return data
+
+@app.route('/getdronegrid/<file_name>')
+def fetch_drone_grid(file_name):
+    c = testJ(file_name)
     data = json.dumps({
         'size': c.size,
         'grid': c.GetHex(False)
