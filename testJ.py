@@ -70,10 +70,13 @@ colour = "RED"
 drone.MoveTo(0,0)
 while True:
     # if empty
+    print("->", cube.colEmpty(drone.x, drone.y, cube.size))
     if (cube.colEmpty(drone.x, drone.y, cube.size)):
+        if(len(drone.hopper) < drone.hopperSize):
+            drone.HopStack((255,0,0))
         #check hopper
         # move
-        mode, x_limit, y_limit = mover(mode, x_limit, y_limit)
+        mode, x_limit, y_limit, stop = mover(mode, x_limit, y_limit, stop)
     else:
         drone.hop()
     break

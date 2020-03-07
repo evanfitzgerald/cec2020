@@ -29,6 +29,13 @@ class Cube:
             stri += "\n"
         return stri
 
+    def colEmpty(self, x, y, z):
+        flag = False
+        for i in range(z):
+            if (self.scrambled[x][y][i] != None):
+                flag = True
+        return flag
+
     def GetHex(self):
         return [[[self.convert(self.scrambled[i][j][k]) for i in range(self.size)] for j in range(self.size)] for k in range(self.size)]
 
