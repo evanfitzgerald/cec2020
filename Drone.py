@@ -1,6 +1,10 @@
 from Block import Block
+import Math
 
 class Drone:
+
+    timeComp = 0
+    lastTouch = None
 
     def __init__(self, hopperSize, cube, x, y, z = 0):
         self.hopper = []
@@ -9,29 +13,36 @@ class Drone:
         self.y = y
         self.z = z
         self.cube = cube
+        self.timeComp = timeComp
+        self.lastTouch = lastTouch
 
     def MoveUp(self):
         if(self.y == 0):
             print("At top!")
             return
+        self.timeComp++;
         self.y -= 1
 
     def MoveDown(self):
         if(self.y == len(self.cube.scrambled)-1):
             print("At Bottom!")
             return
+        self.timeComp++;
         self.y += 1
 
     def MoveLeft(self):
         if(self.x == 0):
             print("At Left!")
             return
+        self.timeComp++;
         self.x -= 1
 
     def MoveTo(self, x, y):
         if(max(x,y) > self.cube.size or min(x, y) < 0):
             print("Out of bounds")
             return
+        dif = (Math.abs(self.x - x) + Math.abs(self.y - y))
+        self.timeComp+= dif;
         self.x = x
         self.y = y
 
@@ -39,6 +50,7 @@ class Drone:
         if(self.x == len(self.cube.scrambled)-1):
             print("At Right!")
             return
+        self.timeComp++;
         self.x += 1
 
     def hop(self):
@@ -51,8 +63,13 @@ class Drone:
             z-=1
         if(len(self.hopper) >= self.hopperSize):
             raise IndexError("Hopper is full!")
+        if(self.lastTouch == block.colour)
+            self.timeComp += 2
+        else
+            self.timeComp += 3
         self.cube.scrambled[self.x][self.y][z+1] = None
         self.hopper.append(block)
+        self.lastTouch = block.colour
 
     def unhop(self, colour):
         todel = None
@@ -67,6 +84,11 @@ class Drone:
             self.hopper.append(Block(colour))
             return
         #print(self.x, self.y,z)
+        if(self.lastTouch == block.colour)
+            self.timeComp += 2
+        else
+            self.timeComp += 3
+        self.lastTouch = block.colour
         self.cube.scrambled[self.x][self.y][z+2] = Block(colour)
         #print("unhopped", self.cube.scrambled[self.x][self.y][z+2], self.x, self.y, z)
 
