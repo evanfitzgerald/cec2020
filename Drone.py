@@ -8,6 +8,30 @@ class Drone:
         self.z = z
         self.cube = cube
 
+    def MoveUp(self):
+        if(self.y == 0):
+            print("At top!")
+            return
+        self.y -= 1
+
+    def MoveDown(self):
+        if(self.y == len(self.cube.scrambled)-1):
+            print("At Bottom!")
+            return
+        self.y += 1
+
+    def MoveLeft(self):
+        if(self.x == 0):
+            print("At Left!")
+            return
+        self.x -= 1
+
+    def MoveRight(self):
+        if(self.x == len(self.cube.scrambled)-1):
+            print("At Right!")
+            return
+        self.x += 1
+
     def hop(self):
         block = None
         z = len(self.cube.scrambled)-1
