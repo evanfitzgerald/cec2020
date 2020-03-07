@@ -7,8 +7,8 @@ class Cube:
 
     def ScanMap(self, x, y):
         for i in range(self.size):
-            if(scrambled[x][y][self.size - 1 - i] != None):
-                return (self.solved[x][y][size - 1 - i],self.solved[x][y][size - 1 - i])
+            if(self.scrambled[x][y][self.size - 1 - i] != None):
+                return (self.solved[x][y][self.size - 1 - i],self.solved[x][y][self.size - 1 - i])
 
         return (None, None)
 
