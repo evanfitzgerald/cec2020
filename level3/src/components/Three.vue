@@ -10,6 +10,7 @@ export default {
   props: {
     horizontal: Boolean,
     vertical: Boolean,
+    invert: Boolean,
     size: Number,
     inputGrid: Array
   },
@@ -26,7 +27,7 @@ export default {
       let container = document.getElementById('container');
 
       this.camera = new Three.PerspectiveCamera(70, container.clientWidth/container.clientHeight, 1, 1000);
-      this.camera.position.z = 20
+      this.camera.position.z = 2 * this.$props.size;
       this.camera.position.y = 0
 
       this.scene = new Three.Scene();
@@ -39,15 +40,20 @@ export default {
     },
     animate() {
       requestAnimationFrame(this.animate);
+      var rotation = 0.01
+      if (this.$props.invert) {
+        rotation = -0.01;
+      }
       if (this.$props.vertical) {
-        this.grid.rotation.x += 0.01;
+        this.grid.rotation.x += rotation;
       }
       if (this.$props.horizontal) {
-        this.grid.rotation.y += 0.01;
+        this.grid.rotation.y += rotation;
       }
       this.renderer.render(this.scene, this.camera);
     },
     updateGrid(size, inputgrid) {
+      this.camera.position.z = 2 * size;
       var cubesize = 1;
       var spacing = 1.1;
       this.scene.remove(this.grid);
@@ -58,7 +64,7 @@ export default {
             if (inputgrid && inputgrid[w][h][d]) {
               var color = this.colorCodeFor(inputgrid[w][h][d]);
               var box = new Three.Mesh(new Three.BoxGeometry(cubesize,cubesize,cubesize),
-                                        new Three.MeshBasicMaterial({ color }));
+                        new Three.MeshBasicMaterial({ color }));
               box.position.x = (h-size/2) * spacing;
               box.position.y = (w-size/2) * spacing;
               box.position.z = (d-size/2) * spacing;

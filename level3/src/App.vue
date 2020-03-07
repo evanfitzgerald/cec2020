@@ -11,8 +11,11 @@
         <label for="horizontal">Horizontal</label>
         <input type="checkbox" id="vertical" v-model="vertical">
         <label for="vertical">Vertical</label>
+        <input type="checkbox" id="invert" v-model="invert">
+        <label for="Invert">Invert</label>
       </p>
-    <Three ref="threecomponent" :size="size" :inputGrid="inputGrid" :vertical="vertical" :horizontal="horizontal"></Three>
+    <Three ref="threecomponent" :size="size" :inputGrid="inputGrid"
+          :vertical="vertical" :horizontal="horizontal" :invert="invert"></Three>
   </div>
 </template>
 
@@ -29,6 +32,7 @@ export default {
     return {
       horizontal: false,
       vertical: false,
+      invert: false,
       size: null,
       inputGrid: null,
       filename: 'easy.txt'
@@ -51,6 +55,7 @@ export default {
       }
     },
     getData() {
+      this.vertical = this.horizontal = this.invert = false;
       axios
         .get("http://localhost:5000/getgrid/" + this.filename)
         .then(response => (this.handleResponse(response)))
