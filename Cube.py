@@ -30,9 +30,9 @@ class Cube:
         return stri
 
     def GetHex(self):
-        return [[[self.convert(self.scrambled[i][j][k]) for i in range(self.size)] for j in range(self.size)] for k in range(self.size)]
+        return [[[self.convert(self.solved[i][j][k]) for i in range(self.size)] for j in range(self.size)] for k in range(self.size)]
 
     def convert(self, tup):
         if tup == None:
             return None
-        return '#%02x%02x%02x' % tup.colour
+        return tup.colour
