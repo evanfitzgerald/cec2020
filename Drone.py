@@ -70,6 +70,18 @@ class Drone:
         self.cube.scrambled[self.x][self.y][z+2] = Block(colour)
         #print("unhopped", self.cube.scrambled[self.x][self.y][z+2], self.x, self.y, z)
 
+    def HopStack(self, colour = None):
+        #self.hop()
+        if colour == None:
+            colour = self.hopper[-1].colour
+        print(colour, len(self.hopper) < self.hopperSize)
+        while(len(self.hopper) < self.hopperSize):
+            self.hop()
+            if self.hopper[-1].colour != colour:
+                print("unhopped")
+                self.unhop(self.hopper[-1].colour)
+
+
     """def unhop(self):
         colour = self.hopper.peek().colour
         todel = None
@@ -110,7 +122,6 @@ class Drone:
 
         i = 0
         while(len(sortedStack) > i):
-            print(sortedStack[i].colour)
             self.unhop(sortedStack[i].colour)
             i+=1
 
