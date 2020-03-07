@@ -1,3 +1,5 @@
+from Block import Block
+
 class Drone:
 
     def __init__(self, hopperSize, cube, x, y, z = 0):
@@ -26,6 +28,13 @@ class Drone:
             return
         self.x -= 1
 
+    def MoveTo(self, x, y):
+        if(max(x,y) > self.cube.size or min(x, y) < 0):
+            print("Out of bounds")
+            return
+        self.x = x
+        self.y = y
+
     def MoveRight(self):
         if(self.x == len(self.cube.scrambled)-1):
             print("At Right!")
@@ -47,11 +56,35 @@ class Drone:
 
     def unhop(self, colour):
         todel = None
-        self.hopper.remove(colour)
-        return colour
+        #self.hopper.remove(colour)
+        z = self.cube.size-1
+        block = None
+        while(block == None and z >= -1):
+            block = self.cube.scrambled[self.x][self.y][z]
+            z -= 1
+        if z > self.cube.size-3:
+            print("Full!")
+            self.hopper.append(Block(colour))
+            return
+        #print(self.x, self.y,z)
+        self.cube.scrambled[self.x][self.y][z+2] = Block(colour)
+        #print("unhopped", self.cube.scrambled[self.x][self.y][z+2], self.x, self.y, z)
 
-    def unhop(self):
-        return self.hopper.pop()
+    """def unhop(self):
+        colour = self.hopper.peek().colour
+        todel = None
+        self.hopper.remove(colour)
+        z = self.cube.size-1
+        block = None
+        while(block != None):
+            block = self.cube.scrambled[self.x][self.y][z]
+            z -= 1
+        if z ==self.cube.size-2:
+            print("Full!")
+            return
+        self.cube.scrambled[self.x][self.y][z-1] = block
+        return colour"""
+
 
     def unhopStack(self):
         sortedStack = []
@@ -74,7 +107,12 @@ class Drone:
                             lindex = i
                             lb = self.hopper[i].colour[2]
             sortedStack.append(self.hopper.pop(lindex))
-        return sortedStack
+
+        i = 0
+        while(len(sortedStack) > i):
+            print(sortedStack[i].colour)
+            self.unhop(sortedStack[i].colour)
+            i+=1
 
     def printHopper(self):
         for e in hopper:
