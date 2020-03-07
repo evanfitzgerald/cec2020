@@ -62,14 +62,13 @@ class Drone:
         while(block == None and z >= -1):
             block = self.cube.scrambled[self.x][self.y][z]
             z -= 1
-            print("SSSS")
         if z > self.cube.size-3:
             print("Full!")
             self.hopper.append(Block(colour))
             return
-        print(self.x, self.y,z)
+        #print(self.x, self.y,z)
         self.cube.scrambled[self.x][self.y][z+2] = Block(colour)
-        print("unhopped", self.cube.scrambled[self.x][self.y][z+2], self.x, self.y, z)
+        #print("unhopped", self.cube.scrambled[self.x][self.y][z+2], self.x, self.y, z)
 
     """def unhop(self):
         colour = self.hopper.peek().colour
@@ -80,11 +79,9 @@ class Drone:
         while(block != None):
             block = self.cube.scrambled[self.x][self.y][z]
             z -= 1
-
         if z ==self.cube.size-2:
             print("Full!")
             return
-        
         self.cube.scrambled[self.x][self.y][z-1] = block
         return colour"""
 
