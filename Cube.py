@@ -9,7 +9,7 @@ class Cube:
         for i in range(self.size):
             if(scrambled[x][y][self.size - 1 - i] != None):
                 return (self.solved[x][y][size - 1 - i],self.solved[x][y][size - 1 - i])
-        
+
         return (None, None)
 
     def isEmpty(self, x, y, z):
@@ -22,9 +22,9 @@ class Cube:
 
                 for k in range(self.size):
                     if(self.scrambled[k][j][i] == None):
-                        stri += "WHITE "
+                        stri += "- \t"
                     else:
-                        stri += str(self.scrambled[k][j][i]) + " "
+                        stri += str(self.scrambled[k][j][i]) + "\t"
                 stri += "\n"
             stri += "\n"
         return stri
