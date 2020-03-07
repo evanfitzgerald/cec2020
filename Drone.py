@@ -82,7 +82,6 @@ class Drone:
         if z ==self.cube.size-2:
             print("Full!")
             return
-
         self.cube.scrambled[self.x][self.y][z-1] = block
         return colour"""
 
