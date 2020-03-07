@@ -23,15 +23,14 @@ export default {
   },
   methods: {
     init() {
-      console.log("Init called");
       let container = document.getElementById('container');
 
-      this.camera = new Three.PerspectiveCamera(70, container.clientWidth/container.clientHeight, 0.01, 10);
-      this.camera.position.z = 10
+      this.camera = new Three.PerspectiveCamera(70, container.clientWidth/container.clientHeight, 1, 1000);
+      this.camera.position.z = 20
       this.camera.position.y = 0
 
       this.scene = new Three.Scene();
-      // this.scene.background = new Three.Color( 0xf0f0f0 );
+      this.scene.background = new Three.Color( 0xf0f0f0 );
       this.updateGrid(this.$props.size, this.$props.inputGrid);
 
       this.renderer = new Three.WebGLRenderer({ antialias: true });
@@ -48,17 +47,18 @@ export default {
       }
       this.renderer.render(this.scene, this.camera);
     },
-    updateGrid(size, grid) {
+    updateGrid(size, inputgrid) {
       var cubesize = 1;
       var spacing = 1.1;
+      this.scene.remove(this.grid);
       this.grid = new Three.Group(); // just to hold them all together
       for (var w = 0; w < size; w++) {
         for (var h=0; h < size; h++) {
           for (var d=0; d < size; d++) {
-            if (grid && grid[w][h][d]) {
-              var color = this.colorCodeFor(grid[w][h][d]);
+            if (inputgrid && inputgrid[w][h][d]) {
+              var color = this.colorCodeFor(inputgrid[w][h][d]);
               var box = new Three.Mesh(new Three.BoxGeometry(cubesize,cubesize,cubesize),
-                          new Three.MeshBasicMaterial({ color }));
+                                        new Three.MeshBasicMaterial({ color }));
               box.position.x = (h-size/2) * spacing;
               box.position.y = (w-size/2) * spacing;
               box.position.z = (d-size/2) * spacing;
